@@ -34,12 +34,12 @@ object Utils {
     fun toInitials(firstName: String?, lastName: String?): String? {
         var initials: String? = null
         return when {
-            firstName.isNullOrEmpty() && lastName.isNullOrEmpty() -> initials?.toUpperCase()
-            firstName.isNullOrEmpty() || lastName.isNullOrEmpty() -> {
+            firstName?.trimIndent().isNullOrEmpty() && lastName?.trimIndent().isNullOrEmpty() -> initials?.toUpperCase()
+            firstName?.trimIndent().isNullOrEmpty() || lastName?.trimIndent().isNullOrEmpty() -> {
                 initials = firstName + lastName
                 initials.toUpperCase().substring(0, 1)
             }
-            firstName.isNotEmpty() && lastName.isNotEmpty() -> firstName.substring(
+            firstName?.trimIndent()!!.isNotEmpty() && lastName?.trimIndent()!!.isNotEmpty() -> firstName.substring(
                 0,
                 1
             ).toUpperCase() + lastName.substring(0, 1).toUpperCase()
