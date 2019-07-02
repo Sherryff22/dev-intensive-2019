@@ -1,6 +1,10 @@
 package ru.skillbranch.devintensive.utils
 
 object Utils {
+
+
+
+
     fun parseFullName(fullName: String?): Pair<String?, String?> {
         val parts: List<String>? = fullName?.trimIndent()?.split(" ")
 
@@ -8,9 +12,24 @@ object Utils {
         if (firstName == "" || firstName == " " ){
             firstName = null
         }
-        var lastName = parts?.getOrNull(1)
+        var lastName: String? = parts?.getOrNull(1)?.trimIndent()
+        if (lastName!=null) {
+            for (i in 1..parts!!.size) {
+                lastName = parts.getOrNull(i)?.trimIndent().toString()
+                if (lastName != " " && lastName != "" && lastName != null) {
+                    lastName = parts.getOrNull(i)?.trimIndent().toString()
+                    return firstName to lastName
+                }
+            }
+        }
         return firstName to lastName
+
     }
+
+
+
+
+
 
     fun toInitials(firstName: String?, lastName: String?): String? {
         var initials: String? = null

@@ -14,15 +14,7 @@ data class User(
     var isOnline: Boolean = false
 ) {
 
-    constructor(id: String, firstName: String?, lastName: String?) : this(
-        id = id,
-        firstName = firstName,
-        lastName = lastName,
-        avatar = null
-    )
-
     init {
-
     }
 
     companion object Factory {
@@ -30,21 +22,21 @@ data class User(
         fun makeUser(fullName: String?): User {
             lastId++
             var fullNameTrimmed = fullName?.trimIndent()
-               return if (!fullNameTrimmed.isNullOrEmpty()) {
-                   val (firstName, lastName) = Utils.parseFullName(fullName)
-                   Builder()
-                       .id("$lastId")
-                       .firstName(firstName)
-                       .lastName(lastName)
-                       .build()
-               } else {
-                   User(id = "$lastId", firstName = null, lastName = null)
-                   Builder()
-                       .id("$lastId")
-                       .firstName(null)
-                       .lastName(null)
-                       .build()
-               }
+            return if (!fullNameTrimmed.isNullOrEmpty()) {
+                val (firstName, lastName) = Utils.parseFullName(fullName)
+                Builder()
+                    .id("$lastId")
+                    .firstName(firstName)
+                    .lastName(lastName)
+                    .build()
+            } else {
+                //  User(id = "$lastId", firstName = null, lastName = null)
+                Builder()
+                    .id("$lastId")
+                    .firstName(null)
+                    .lastName(null)
+                    .build()
+            }
         }
     }
 
