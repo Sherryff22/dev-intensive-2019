@@ -1,5 +1,6 @@
 package ru.skillbranch.devintensive.extensions
 
+import java.lang.Math.abs
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -98,6 +99,36 @@ enum class TimeUnits {
     SECOND,
     MINUTE,
     HOUR,
-    DAY
+    DAY;
+
+    fun plural(value: Int): String {
+        return "$value ${getPluralForm(value, this)}"
+
+    }
 }
 
+enum class Plurals(private val second: String, private val minute: String, private val hour: String, private val day: String){
+    ONE("секунду", "минуту", "час", "день"),
+    FEW("секунды", "минуты", "часа", "дня"),
+    MANY("секунд","минут", "часов", "дней");
+
+    fun get(unit: TimeUnits): String {
+        return when(unit){
+            TimeUnits.SECOND -> second
+            TimeUnits.MINUTE -> minute
+            TimeUnits.HOUR -> hour
+            TimeUnits.DAY -> day
+        }
+    }
+}
+
+fun getPluralForm(amount: Int, units: TimeUnits): String {
+    val posAmount = abs(amount) % 100
+
+    return when(posAmount){
+        1 -> Plurals.ONE.get(units)
+        in 2..4 -> Plurals.FEW.get(units)
+        0, in 5..19 -> Plurals.MANY.get(units)
+        else -> getPluralForm(posAmount % 10, units)
+    }
+}
